@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlusWeatherApp</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      h1,
+      h2,
+      p {
+        color: black;
+        margin-top: 0.5cm;
+        font-size: 0.5cm;
+        margin-left: 20px;
+      }
+      h3,
+      .image {
+        margin-left: 20px;
+      }
+      .button {
+        background-color: violet;
+        color: white;
+      }
+
+      p {
+        color: black;
+        font-size: 60px;
+        margin-left: 20px;
+      }
+
+      .date {
+        font-size: 13px;
+        margin-left: 20px;
+      }
+      ul {
+        list-style: none;
+        font-family: arial, sans-serif;
+        color: black;
+      }
+      .button:hover {
+        background: blueviolet;
+      }
+      #current:hover {
+        background: rgb(191, 191, 228);
+        cursor: pointer;
+      }
+      .form {
+        background: #f9f7fe;
+        border: none;
+        padding: 20px 20px;
+        display: inline-block;
+        border-radius: 6px;
+        color: rgba(39, 33, 66, 0.4);
+        font-size: 16px;
+        height: 50px;
+        line-height: 20px;
+        margin-top: 20px;
+        margin-left: 20px;
+      }
+      .form:hover {
+        background: white;
+        box-shadow: 1.5px 1.5px 1.5px 1.5px grey;
+        cursor: pointer;
+        border: whitesmoke;
+        padding: 20px 20px;
+        word-wrap: break-word;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      h4 {
+        margin-top: 0.5cm;
+        text-align: center;
+        margin-right: 10cm;
+        font-size: 10px;
+        margin-left: 20px;
+      }
+      body {
+        background: radial-gradient(
+          circle at 10% 20%,
+          rgb(251, 222, 238) 15.6%,
+          rgb(206, 201, 226) 80.3%
+        );
+      }
+      #days {
+        font-size: 15px;
+        font-weight: 700;
+        padding: 5px 0px;
+        text-align: center;
+        background-color: rgba(39, 61, 84, 0.2);
+        border: 4px solid gold;
+        margin-top: 50px;
+        width: 650px;
+        margin-left: 20px;
+        max-width: 1800px;
+        max-height: 1200px;
+        background-image: url("weatherimg.jpeg");
+      }
+      .openSource {
+        max-width: 1000px;
+      }
+      .weatherWrapper {
+        max-width: 1200px;
+        max-height: 1200px;
+        height: 500px;
+        margin: 65px auto;
+        border: 0.2px;
+        border-radius: 0.1px;
+        padding-top: 1px;
+        padding-left: 1px;
+        padding-right: 1px;
+        padding-bottom: 1px;
+        box-sizing: border-box;
+        background: radial-gradient(
+          circle at 12.3% 19.3%,
+          rgb(85, 88, 218) 0%,
+          rgb(95, 209, 249) 100.2%
+        );
+        font-family: arial, sans-serif;
+        box-shadow: 0.1px 0.1px 1.5px 1.5px grey;
+        margin-top: 70px;
+        margin-left: 2px;
+        border: 3px solid rgba(255, 255, 255);
+        background-image: url("weatherimg.jpeg");
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="weatherWrapper">
+        <form id="fr">
+          <input
+            type="text"
+            id="user-input"
+            placeholder="Type a city..."
+            class="form"
+          />
+          <input type="submit" class="button" value="Search" />
+          <span id="current-location"
+            ><button type="button" class="btn btn-primary" id="current">
+              📍Current
+            </button></span
+          >
+        </form>
+
+        <h1 id="city">Check the weather in your city...</h1>
+
+        <h2 class="date">Tuesday 07:40</h2>
+        <h3>Partly Cloudy</h3>
+        <div class="row">
+          <div class="col-3">
+            <img
+              src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
+              alt="Cloudy icon"
+              class="image"
+            />
+          </div>
+
+          <div class="col-3">
+            <strong
+              ><p><span id="temperature">19</span>•C</p></strong
+            >
+          </div>
+          <div class="col-6">
+            <ul>
+              <li>Precipitation:0%</li>
+              <li>Humidity:<span id="humidity">77%</span></li>
+              <li>Wind:<span id="wind">8km/h</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row" id="days">
+          <div class="col">MON<br />☀️<br />29°c <br />☔️ 0°</div>
+
+          <div class="col">Tue<br />☀️<br />29°c <br />☔️ 0°</div>
+
+          <div class="col">WED<br />🌤<br />18°c<br />☔️ 0°</div>
+
+          <div class="col">THUR<br />🌥<br />16°c<br />☔️ 2°</div>
+
+          <div class="col">FRI<br />☀️<br />31°c<br />☔️ 0°</div>
+
+          <div class="col">SAT<br />☀️<br />32°c<br />☔️ 0°</div>
+        </div>
+      </div>
+    </div>
+    <h4 class="openSource">
+      <a
+        href="https://github.com/Tolulopejay/Testing-GitHub/commit/6c449962c1411a960481fe0e34b2f239caa5910d"
+        >Open-source code </a
+      >by Tolulope Johnson
+      <a href="https://www.netlify.com">and hosted on Netlify</a>
+    </h4>
+
+    <script>
+      let now = new Date();
+      let h2 = document.querySelector("h2");
+      let date = now.getDate();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let year = now.getFullYear();
+      let days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+      let day = days[now.getDay()];
+      let months = [
+        "Jan",
+        "Feb",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "Sept",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      let month = months[now.getMonth()];
+      if (hours < 10) {
+        hours = `0${hours}`;
+      }
+      if (minutes < 10) {
+        minutes = `0${minutes}`;
+      }
+      h2.innerHTML = `Last updated: ${day} ${date} ${month} ${hours}:${minutes}, ${year}`;
+
+      function displayWeatherCondition(response) {
+        console.log(response.data);
+        let h1 = document.querySelector("h1");
+        h1.innerHTML = response.data.name;
+        let temp = document.querySelector("#temperature");
+        temp.innerHTML = Math.round(response.data.main.temp);
+        document.querySelector("#wind").innerHTML = Math.round(
+          response.data.wind.speed
+        );
+        document.querySelector("#humidity").innerHTML =
+          response.data.main.humidity;
+        document.querySelector("h3").innerHTML = response.data.weather[0].main;
+      }
+
+      function country(event) {
+        event.preventDefault();
+
+        let apiKey = "5f927ad8cdc7b7c47b620fc64e34c6d6";
+        let city = document.querySelector("#user-input").value;
+        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+        axios.get(apiUrl).then(displayWeatherCondition);
+      }
+      let form = document.querySelector("form");
+      form.addEventListener("submit", country);
+      //let user = document.querySelector("#user-input");
+      //let h1 = document.querySelector("h1");
+      //h1.innerHTML = user.value;
+
+      function primaryLocation(position) {
+        let apiKey = "5f927ad8cdc7b7c47b620fc64e34c6d6";
+        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
+        axios.get(apiUrl).then(displayWeatherCondition);
+      }
+
+      function primary(event) {
+        event.preventDefault();
+        navigator.geolocation.getCurrentPosition(primaryLocation);
+      }
+
+      let currentLocation = document.querySelector("#current-location");
+      currentLocation.addEventListener("click", primary);
+    </script>
+  </body>
+</html>
