@@ -22,7 +22,7 @@
         margin-left: 20px;
       }
       h3,
-      .image {
+      #image {
         margin-left: 20px;
       }
       .button {
@@ -101,10 +101,12 @@
         margin-left: 20px;
         max-width: 1800px;
         max-height: 1200px;
-        background-image: url("weatherimg.jpeg");
+         background-image: url("weatherimg.jpeg");
+        
       }
       .openSource {
         max-width: 1000px;
+        margin-top: 20px;
       }
       .weatherWrapper {
         max-width: 1200px;
@@ -129,6 +131,25 @@
         margin-left: 2px;
         border: 3px solid rgba(255, 255, 255);
         background-image: url("weatherimg.jpeg");
+      }
+      .fahrenheit:hover {
+     color: red;
+     cursor: pointer;
+      }
+      .celsius:hover {
+        color:red;
+        cursor: pointer;
+      }
+      .fahrenheit {
+     font-size: 25px;
+     
+      }
+      .celsius {
+     font-size: 25px;
+     
+      }
+      h3 {
+        text-transform: capitalize;
       }
     </style>
   </head>
@@ -159,14 +180,14 @@
             <img
               src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
               alt="Cloudy icon"
-              class="image"
+              id="image"
             />
           </div>
 
           <div class="col-3">
             <strong
-              ><p><span id="temperature">19</span>•C</p></strong
-            >
+              ><p><span id="temperature">19</span></strong
+            ><small><span class="celsius">•C</span><span>|</span><span class="fahrenheit">F</span></small></p>
           </div>
           <div class="col-6">
             <ul>
@@ -243,7 +264,10 @@
         document.querySelector("#humidity").innerHTML =
           response.data.main.humidity;
         document.querySelector("h3").innerHTML = response.data.weather[0].main;
+        let image = document.querySelector("#image");
+      image.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
       }
+      
 
       function country(event) {
         event.preventDefault();
@@ -251,13 +275,12 @@
         let apiKey = "5f927ad8cdc7b7c47b620fc64e34c6d6";
         let city = document.querySelector("#user-input").value;
         let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-        axios.get(apiUrl).then(displayWeatherCondition);
+        
+        axios.get(apiUrl).then(displayWeatherCondition); 
       }
       let form = document.querySelector("form");
       form.addEventListener("submit", country);
-      //let user = document.querySelector("#user-input");
-      //let h1 = document.querySelector("h1");
-      //h1.innerHTML = user.value;
+     
 
       function primaryLocation(position) {
         let apiKey = "5f927ad8cdc7b7c47b620fc64e34c6d6";
