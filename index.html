@@ -1,3 +1,4 @@
+    
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,13 +14,17 @@
     />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
-      h1,
+    
       h2,
-      p {
+      h1{
         color: black;
         margin-top: 0.5cm;
-        font-size: 0.5cm;
+        font-size: 20px;
         margin-left: 20px;
+      }
+      p {
+        color: black;
+        font-size: 60px;
       }
       h3,
       #image {
@@ -29,13 +34,6 @@
         background-color: violet;
         color: white;
       }
-
-      p {
-        color: black;
-        font-size: 60px;
-        margin-left: 20px;
-      }
-
       .date {
         font-size: 13px;
         margin-left: 20px;
@@ -162,6 +160,7 @@
             id="user-input"
             placeholder="Type a city..."
             class="form"
+
           />
           <input type="submit" class="button" value="Search" />
           <span id="current-location"
@@ -276,7 +275,7 @@
         let city = document.querySelector("#user-input").value;
         let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
         
-        axios.get(apiUrl).then(displayWeatherCondition); 
+        axios.get(apiUrl).then(displayWeatherCondition); //this piece of code displays the response from the api key and and url to the console using objects and arrays.
       }
       let form = document.querySelector("form");
       form.addEventListener("submit", country);
