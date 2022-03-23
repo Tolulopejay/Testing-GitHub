@@ -130,20 +130,22 @@
         border: 3px solid rgba(255, 255, 255);
         background-image: url("weatherimg.jpeg");
       }
-      .fahrenheit:hover {
+      #fahrenheit:hover {
      color: red;
      cursor: pointer;
       }
-      .celsius:hover {
+      #celsius:hover {
         color:red;
         cursor: pointer;
       }
-      .fahrenheit {
-     font-size: 25px;
+      #fahrenheit {
+     font-size: 30px;
+     text-decoration: none;
      
       }
-      .celsius {
-     font-size: 25px;
+      #celsius {
+     font-size: 30px;
+     text-decoration: none;
      
       }
       h3 {
@@ -151,8 +153,7 @@
       }
     </style>
   </head>
-  <body>
-    <div class="container">
+ <div class="container">
       <div class="weatherWrapper">
         <form id="fr">
           <input
@@ -186,7 +187,7 @@
           <div class="col-3">
             <strong
               ><p><span id="temperature">19</span></strong
-            ><small><span class="celsius">•C</span><span>|</span><span class="fahrenheit">F</span></small></p>
+            ><small><a href="#" id="celsius">•C</a><span>|</span><a href="#" id="fahrenheit">•F</a></small></p>
           </div>
           <div class="col-6">
             <ul>
@@ -197,17 +198,17 @@
           </div>
         </div>
         <div class="row" id="days">
-          <div class="col">MON<br />☀️<br />29°c <br />☔️ 0°</div>
+          <div class="col">MON<br />☀️<br />29°c <br /> 0°</div>
 
-          <div class="col">Tue<br />☀️<br />29°c <br />☔️ 0°</div>
+          <div class="col">Tue<br />☀️<br />29°c <br /> 0°</div>
 
-          <div class="col">WED<br />🌤<br />18°c<br />☔️ 0°</div>
+          <div class="col">WED<br />🌤<br />18°c<br /> 0°</div>
 
-          <div class="col">THUR<br />🌥<br />16°c<br />☔️ 2°</div>
+          <div class="col">THUR<br />🌥<br />16°c<br />2°</div>
 
-          <div class="col">FRI<br />☀️<br />31°c<br />☔️ 0°</div>
+          <div class="col">FRI<br />☀️<br />31°c<br />0°</div>
 
-          <div class="col">SAT<br />☀️<br />32°c<br />☔️ 0°</div>
+          <div class="col">SAT<br />☀️<br />32°c<br />0°</div>
         </div>
       </div>
     </div>
@@ -218,7 +219,6 @@
       >by Tolulope Johnson
       <a href="https://www.netlify.com">and hosted on Netlify</a>
     </h4>
-
     <script>
       let now = new Date();
       let h2 = document.querySelector("h2");
@@ -260,12 +260,14 @@
         document.querySelector("#wind").innerHTML = Math.round(
           response.data.wind.speed
         );
+        celsiusTemperature = response.data.main.temp;
         document.querySelector("#humidity").innerHTML =
           response.data.main.humidity;
         document.querySelector("h3").innerHTML = response.data.weather[0].main;
         let image = document.querySelector("#image");
       image.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
       }
+      
       
 
       function country(event) {
@@ -294,6 +296,25 @@
 
       let currentLocation = document.querySelector("#current-location");
       currentLocation.addEventListener("click", primary);
+
+      function showFahrenheitTemperature(event) {
+        event.preventDefault();
+        let temperatureElement = document.querySelector("#temperature");
+        let fahTemp = (celsiusTemperature * 9) / 5 + 32;
+        temperatureElement.innerHTML = Math.round(fahTemp);
+      }
+        function showCelsiusTemperature(event) {
+          event.preventDefault();
+          let temperatureElement = document.querySelector("#temperature");
+          temperatureElement.innerHTML = Math.round(celsiusTemperature);
+        }
+      let celsiusTemperature = null;
+
+      let fahrenheitLink = document.querySelector("#fahrenheit");
+      fahrenheitLink.addEventListener("click", showFahrenheitTemperature);
+
+      let celLink = document.querySelector("#celsius");
+      celLink.addEventListener("click", showCelsiusTemperature);
     </script>
   </body>
 </html>
