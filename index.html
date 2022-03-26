@@ -20,6 +20,7 @@
         margin-top: 0.5cm;
         font-size: 20px;
         margin-left: 20px;
+        opacity: 0.6;
       }
       p {
         color: black;
@@ -85,8 +86,9 @@
           rgb(251, 222, 238) 15.6%,
           rgb(206, 201, 226) 80.3%
         );
+        
       }
-      #days {
+      #forecast {
         font-size: 15px;
         font-weight: 700;
         padding: 5px 0px;
@@ -197,18 +199,8 @@
             </ul>
           </div>
         </div>
-        <div class="row" id="days">
-          <div class="col">MON<br />☀️<br />29°c <br /> 0°</div>
-
-          <div class="col">Tue<br />☀️<br />29°c <br /> 0°</div>
-
-          <div class="col">WED<br />🌤<br />18°c<br /> 0°</div>
-
-          <div class="col">THUR<br />🌥<br />16°c<br />2°</div>
-
-          <div class="col">FRI<br />☀️<br />31°c<br />0°</div>
-
-          <div class="col">SAT<br />☀️<br />32°c<br />0°</div>
+        <div class="row" id="forecast">
+          
         </div>
       </div>
     </div>
@@ -251,6 +243,22 @@
       }
       h2.innerHTML = `Last updated: ${day} ${date} ${month} ${hours}:${minutes}, ${year}`;
 
+      function displayForecast() {
+        let forecastElement = document.querySelector("#forecast");
+        forecastElement.innerHTML = `<div class="col">MON<br />☀️<br />29°c <br /> 0°</div>
+
+          <div class="col">TUE<br />☀️<br />29°c <br /> 0°</div>
+
+          <div class="col">WED<br />🌤<br />18°c<br /> 0°</div>
+
+          <div class="col">THUR<br />🌥<br />16°c<br />2°</div>
+
+          <div class="col">FRI<br />☀️<br />31°c<br />0°</div>
+
+          <div class="col">SAT<br />☀️<br />32°c<br />0°</div>`;
+      }
+      displayForecast();
+
       function displayWeatherCondition(response) {
         console.log(response.data);
         let h1 = document.querySelector("h1");
@@ -268,16 +276,21 @@
       image.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
       }
       
-      
+      function search(city) {
+      let apiKey = "5f927ad8cdc7b7c47b620fc64e34c6d6";
+      let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+       axios.get(apiUrl).then(displayWeatherCondition); 
+
+      }
 
       function country(event) {
         event.preventDefault();
 
-        let apiKey = "5f927ad8cdc7b7c47b620fc64e34c6d6";
-        let city = document.querySelector("#user-input").value;
-        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
         
-        axios.get(apiUrl).then(displayWeatherCondition); //this piece of code displays the response from the api key and and url to the console using objects and arrays.
+        let city = document.querySelector("#user-input").value;
+        
+        search(city);
+        
       }
       let form = document.querySelector("form");
       form.addEventListener("submit", country);
@@ -315,6 +328,8 @@
 
       let celLink = document.querySelector("#celsius");
       celLink.addEventListener("click", showCelsiusTemperature);
+
+      search("London");
     </script>
   </body>
 </html>
