@@ -95,7 +95,7 @@
         text-align: center;
         background-color: rgba(39, 61, 84, 0.2);
         border: 4px solid gold;
-        margin-top: 70px;
+        margin-top: 80px;
         width: 650px;
         margin-left: 20px;
         max-width: 1800px;
@@ -243,21 +243,33 @@
       }
       h2.innerHTML = `Last updated: ${day} ${date} ${month} ${hours}:${minutes}, ${year}`;
 
-      function displayForecast() {
+      function displayForecast(response) {
+        let forecast = response.data.daily;
         let forecastElement = document.querySelector("#forecast");
-        forecastElement.innerHTML = `<div class="col">MON<br />☀️<br />29°c <br /> 0°</div>
+        let forecastHTML = `<div class="row">`;
+          let days = ["Sun", "Mon", "Tue", "Wed"];
+          forecast.forEach(function (forecastDay) {
+        forecastHTML = forecastHTML + `<div class="col-2">
+              <div class="weather-day">${forecastDay.dt}</div>
+              <img src="http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png"
+              alt=""
+              width="36" />
+              <div class="weather-date">
+                <span class="weatherMax">
+              ${forecastDay.temp.max}• </span> <span class="weatherMin">${forecastDay.temp.min}•</span> 
+              </div>
+              </div>`;});
+          
+              forecastElement.innerHTML = forecastHTML;
+        }
 
-          <div class="col">TUE<br />☀️<br />29°c <br /> 0°</div>
-
-          <div class="col">WED<br />🌤<br />18°c<br /> 0°</div>
-
-          <div class="col">THUR<br />🌥<br />16°c<br />2°</div>
-
-          <div class="col">FRI<br />☀️<br />31°c<br />0°</div>
-
-          <div class="col">SAT<br />☀️<br />32°c<br />0°</div>`;
+      function getForecast(coordinates) {
+        console.log(coordinates);
+        let apiKey = "5f927ad8cdc7b7c47b620fc64e34c6d6";
+        let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+      console.log(apiUrl);
+      axios.get(apiUrl).then(displayForecast);
       }
-      displayForecast();
 
       function displayWeatherCondition(response) {
         console.log(response.data);
@@ -274,6 +286,8 @@
         document.querySelector("h3").innerHTML = response.data.weather[0].main;
         let image = document.querySelector("#image");
       image.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
+
+      getForecast(response.data.coord);
       }
       
       function search(city) {
@@ -330,6 +344,7 @@
       celLink.addEventListener("click", showCelsiusTemperature);
 
       search("London");
+      displayForecast();
     </script>
   </body>
 </html>
